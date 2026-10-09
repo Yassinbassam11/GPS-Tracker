@@ -65,6 +65,14 @@ flowchart TD
     end
 ```
 
+### Proteus Circuit Schematic
+
+<p align="center">
+  <img src="images/proteus_schematic.png" alt="Proteus Simulation Schematic" width="850"/>
+  <br>
+  <em>Figure 1: Full schematic simulation in Proteus 8 including Arduino Uno, SIM900D, GPS module, LCD, and Virtual Terminals.</em>
+</p>
+
 ---
 
 ## ✨ Key Features
@@ -232,6 +240,12 @@ Proteus requires the compiled machine code (`.hex`) to simulate the Arduino Uno 
      ```
 3. Open the **Virtual Terminal** window (if it does not pop up automatically, go to the top menu: **Debug** -> **Virtual Terminal**).
 
+<p align="center">
+  <img src="images/simulation_running.png" alt="Simulation in Action" width="850"/>
+  <br>
+  <em>Figure 2: Real-time simulation showing LCD coordinate telemetry, Virtual Terminal CLI, and GSM message exchanges.</em>
+</p>
+
 ---
 
 ### Testing Scenarios
@@ -331,6 +345,9 @@ GPS Tracker/
 ├── GPS Tracker.pdsprj.workspace # Proteus workspace layout & user window preferences
 ├── GPS_Tracker/
 │   └── GPS_Tracker.ino         # Arduino C++ source code (Firmware)
+├── images/                      # Schematic diagrams and simulation screenshots
+│   ├── proteus_schematic.png
+│   └── simulation_running.png
 └── README.md                   # Project documentation & simulation guide
 ```
 
