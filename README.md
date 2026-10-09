@@ -48,20 +48,20 @@ Simultaneously, the system interfaces with a **SIM900D GSM Module** to handle re
 
 ```mermaid
 flowchart TD
-    subgraph Proteus Simulation Environment
-        GPS["🛰️ GPS Module\n(NMEA TX @ 9600 bps)"] -->|Pin 5 (GPS_RX)| ARD["🧠 Arduino Uno\n(ATmega328P)"]
-        ARD -->|Pin 4 (GPS_TX)| GPS
+    subgraph Proteus["Proteus Simulation Environment"]
+        GPS["GPS Module<br/>(NMEA TX @ 9600 bps)"] -->|"Pin 5 (GPS_RX)"| ARD["Arduino Uno<br/>(ATmega328P)"]
+        ARD -->|"Pin 4 (GPS_TX)"| GPS
 
-        GSM["📶 GSM Module\n(SIM900D @ 9600 bps)"] <-->|Pins 2 & 3\n(SoftwareSerial)| ARD
+        GSM["GSM Module (SIM900D)<br/>(9600 bps)"] <-->|"Pins 2 & 3 (SoftwareSerial)"| ARD
 
-        ARD -->|Pins 7-12\n(4-Bit Mode)| LCD["🖥️ 16x2 LCD Display\n(LM016L)"]
-        POT["⚙️ Trimpot 5kΩ"] -->|VEE / V0| LCD
+        ARD -->|"Pins 7-12 (4-Bit Mode)"| LCD["16x2 LCD Display<br/>(LM016L)"]
+        POT["Trimpot 5kΩ"] -->|"VEE / V0"| LCD
 
-        TERM["💻 Virtual Terminal\n(Debug Console)"] <-->|Pins 0 & 1\n(Hardware UART)| ARD
+        TERM["Virtual Terminal<br/>(Debug Console)"] <-->|"Pins 0 & 1 (Hardware UART)"| ARD
     end
 
-    subgraph Remote Interaction
-        USER["📱 Remote Phone / User"] <-->|SMS Messages / Location Request| GSM
+    subgraph Remote["Remote Interaction"]
+        USER["Remote Phone / User"] <-->|"SMS / Location Request"| GSM
     end
 ```
 
@@ -157,9 +157,9 @@ sequenceDiagram
     participant LCD as 16x2 LCD
 
     Note over MCU,LCD: Boot & Initialization
-    MCU->>LCD: "Initializing..."
+    MCU->>LCD: Initializing...
     MCU->>GSM: AT, AT+CMGF=1, AT+CNMI=2,2,0,0,0
-    MCU->>LCD: "System Ready"
+    MCU->>LCD: System Ready
 
     loop Real-Time Loop
         GPS->>MCU: Stream NMEA sentences
@@ -167,13 +167,13 @@ sequenceDiagram
         MCU->>LCD: Update Lat & Lon (Every 2000 ms)
 
         opt Location Request Received
-            User->>GSM: SMS: "get location"
-            GSM->>MCU: +CMT: "<Sender>", ..., "get location"
+            User->>GSM: SMS: get location
+            GSM->>MCU: +CMT: Sender, get location
             MCU->>LCD: Show Sender & Message (5 sec)
-            MCU->>GSM: AT+CMGS="<Sender>"
-            MCU->>GSM: "https://maps.google.com/?q=LAT,LON&z=15" + [CTRL+Z]
+            MCU->>GSM: AT+CMGS=Sender Phone Number
+            MCU->>GSM: Maps URL link + CTRL+Z
             GSM-->>User: SMS received with Google Maps link
-            MCU->>LCD: "SMS Sent to: <Sender>"
+            MCU->>LCD: SMS Sent to Sender
         end
     end
 ```
